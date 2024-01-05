@@ -3,7 +3,6 @@ document.addEventListener('DOMContentLoaded', function() {
   const addDividerBtn = document.getElementById('add-divider');
   const clearAllBtn = document.getElementById('clear-all');
 
-  // Load notes from localStorage if available
   if (localStorage.getItem('notes')) {
       noteText.value = localStorage.getItem('notes');
   }
@@ -14,7 +13,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   noteText.addEventListener('keydown', function(event) {
       if (event.key === 'Enter' && event.shiftKey) {
-          event.preventDefault(); // Prevent default newline behavior
+          event.preventDefault();
           addDivider();
       }
 
@@ -29,26 +28,16 @@ document.addEventListener('DOMContentLoaded', function() {
       const textBeforeCursor = noteContent.substring(0, cursorPosition);
       const textAfterCursor = noteContent.substring(cursorPosition);
       const updatedNote = textBeforeCursor + '\n----------\n' + textAfterCursor;
-
-      // Update textarea value
       noteText.value = updatedNote;
-
-      // Store the updated note in localStorage
       localStorage.setItem('notes', updatedNote);
-
-      // Set the cursor position below the divider
-      const newPosition = textBeforeCursor.length + 12; // Set position below '----------'
+      const newPosition = textBeforeCursor.length + 12;
       noteText.setSelectionRange(newPosition, newPosition);
       noteText.focus();
   }
 
   function clearAll() {
-      // Clear textarea value
       noteText.value = '';
-
-      // Clear notes from localStorage
       localStorage.removeItem('notes');
-
       noteText.focus();
   }
 
